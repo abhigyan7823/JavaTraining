@@ -16,5 +16,9 @@ public class TreeMap1 {
         for(Map.Entry<String,Integer> en:tm.entrySet()){
             System.out.print(en.getKey()+"->"+en.getValue()+" ");
         }
+        System.out.println(tm.ceilingEntry(tm.ceilingKey("B")));
+        System.out.println(tm.descendingMap());
+        System.out.println(tm.firstEntry());
+        System.out.println(tm.floorEntry("Z"));
     }
 }

@@ -26,6 +26,7 @@ public class HashMap2 {
         for(String st:hm.keySet()){
             System.out.print(hm.get(st)+" ");
         }
+        System.out.println("");
         
     }
 }

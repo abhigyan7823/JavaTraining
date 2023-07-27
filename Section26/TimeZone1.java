@@ -14,5 +14,6 @@ public class TimeZone1 {
         System.out.println(tm.observesDaylightTime());
         gc.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
         System.out.println(gc.getTimeZone());
+        System.out.println(gc.getCalendarType());
     }
 }

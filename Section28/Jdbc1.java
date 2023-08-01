@@ -7,7 +7,7 @@ public class Jdbc1 {
         String uname="root";
         String pass="root";
         Class.forName("com.mysql.jdbc.Driver");
-        try (Connection con = DriverManager.getConnection(url,uname,pass)) {
+        Connection con = DriverManager.getConnection(url,uname,pass);
             Statement st=con.createStatement();
             //String sql="INSERT INTO Employee2 values(10)";
             //st.executeUpdate(sql);
@@ -20,6 +20,8 @@ public class Jdbc1 {
             catch(Exception e){
             System.out.println(e);
             }*/
-        }
+            st.close();
+            con.close();
+        
     }
 }

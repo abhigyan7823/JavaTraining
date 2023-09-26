@@ -109,6 +109,13 @@ public class LinkedList {
 		}
 		return false;
 	}
+	public void display(Node head) {
+		if(head == null) {
+			return;
+		}
+		System.out.print(head.data+" ");
+		display(head.next);
+	}
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
@@ -123,7 +130,8 @@ public class LinkedList {
 		
 		ll.insertAfter(ll.head,10);
 		ll.print();
-		
+		System.out.println("with rec");
+		ll.display(ll.head);
 		ll.deleteFirst();
 		ll.print();
 		
@@ -143,5 +151,6 @@ public class LinkedList {
 		
 		ll.delete(1);
 		ll.print();
+		
    	}
 }

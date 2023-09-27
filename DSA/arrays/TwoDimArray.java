@@ -1,4 +1,4 @@
-package src;
+package src.arrays;
 
 public class TwoDimArray {
 

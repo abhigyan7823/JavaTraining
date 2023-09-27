@@ -1,4 +1,4 @@
-package src;
+package src.LinkedList;
 
 public class CircluarLinkedList {
 	Node head=null;

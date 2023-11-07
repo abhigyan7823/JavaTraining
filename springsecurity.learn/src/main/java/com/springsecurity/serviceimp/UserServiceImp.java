@@ -11,8 +11,10 @@ import com.springsecurity.userrepo.UserRepo;
 
 @Service
 public class UserServiceImp implements UserService {
+	
 	@Autowired
 	UserRepo repo;
+	
 	@Override
 	public List<User> getAllUsers() {
 		List<User> userlist = repo.findAll();

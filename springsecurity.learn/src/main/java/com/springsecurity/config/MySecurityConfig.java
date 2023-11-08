@@ -22,10 +22,11 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/signin").permitAll()
 //		.antMatchers("/home/**").hasRole("NORMAL")
 //		.antMatchers("/home/**").hasRole("ADMIN")
-		.anyRequest().authenticated().and().formLogin("/signin");
+		.anyRequest().authenticated().and().formLogin().loginPage("/signin").loginProcessingUrl("/dologin")
+		.defaultSuccessUrl("/users");
 	}
 	
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().withUser("luffy").password(this.passwordEncoder().encode("luffy")).roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("zoro").password(this.passwordEncoder().encode("zoro")).roles("NORMAL");
 	}

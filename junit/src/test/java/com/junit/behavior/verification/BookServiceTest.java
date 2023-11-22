@@ -63,8 +63,8 @@ public class BookServiceTest {
 	}
 	
 	@Test
-	public void testUpdatePrice() {
-		bookService.updatePrice(null, 600);
+	public void testUpdatePrice() { 
+		bookService.updatePrice(null, 700);
 		verifyNoInteractions(bookRepository);
 	}
 	

@@ -55,15 +55,15 @@ public class BookServiceTest {
 	
 	@Test
 	public void testSaveBookWithBookRequest() {
-		BookRequest bookRequest = new BookRequest("Mockito In Action", 500);
-		Book book = new Book(1234,"Mockito In Action", 600);
-		doNothing().when(bookRepo).save(book);
-		bookService.addBook(bookRequest);
+		BookRequest bookRequest = new BookRequest("Mockito In Action", 700);
+	    Book book1 = new Book(0, "Mockito In Action", 700);
+	    doNothing().when(bookRepo).save(book1); 
+	    bookService.addBook(bookRequest);
 	}
 	
 	@Test
 	public void testSaveBookWithBookRequestWithGreaterPrice() {
-		BookRequest bookRequest = new BookRequest("Mockito In Action", 500);
+		BookRequest bookRequest = new BookRequest("Mockito In Action", 600);
 		Book book = new Book(1234,"Mockito In Action", 600);
 //		doNothing().when(bookRepository).save(book);
 		bookService.addBook(bookRequest);

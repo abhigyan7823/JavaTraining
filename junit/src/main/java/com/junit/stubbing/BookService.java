@@ -4,13 +4,13 @@ import java.util.List;
 
 public class BookService {
 	
-private BookRepo bookRepo;
+	private BookRepo bookRepo;
 	
 	public BookService(BookRepo bookRepo) {
 		this.bookRepo = bookRepo;
 	}
 	
-	public List<Book> getNewBooksWithAppliedDiscount(int discountRate, int days){
+	public List<Book> getNewBooksWithAppliedDiscount(int discountRate, int days) {
 		List<Book> newBooks = bookRepo.findNewBooks(days);
 		
 		for(Book book : newBooks){

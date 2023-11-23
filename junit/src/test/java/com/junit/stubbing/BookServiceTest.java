@@ -27,23 +27,16 @@ public class BookServiceTest {
 		List<Integer> bookIds = new ArrayList<>();
 		bookIds.add(1234);
 		bookIds.add(1235);
-		Book book1 = new Book(1234, "Mockito In Action", 500);
-		Book book2 = new Book(1235, "JUnit 5 In Action", 400);
 		
+		Book book1 = new Book(1234,"Junit in Action",400);
+		Book book2 = new Book(1235,"Mockito in Action",500);
 		
-		when(bookRepo.findBookByBookId(1234))
-		.thenReturn(book1)
-		.thenReturn(book1);
-		
-//		when(bookRepo.findBookByBookId(1234)).thenReturn(book1);
-//		when(bookRepo.findBookByBookId(1235)).thenReturn(book2);
-		
-//		doReturn(book1).when(bookRepo).findBookByBookId(1234);
-//		doReturn(book2).when(bookRepo).findBookByBookId(1235);
+		when(bookRepo.findBookByBookId(1234)).thenReturn(book1);
+		when(bookRepo.findBookByBookId(1235)).thenReturn(book2);
 		
 		int actualCost = bookService.calculateTotalCost(bookIds);
 		
-		assertEquals(900, actualCost);
+		assertEquals(900,actualCost);
 	}
 	
 	@Test

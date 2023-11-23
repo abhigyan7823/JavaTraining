@@ -15,14 +15,14 @@ public class BookService {
 		List<Book> books = null;
 		try {
 			books = bookRepository.findAllBooks();
-		} catch (SQLException e) {
-			throw new DatabaseReadException("unable to read data from database due to - "+e.getMessage());
+		}
+		catch(Exception e) {
+			throw new DatabaseReadException("Unable to read data from database due to "+e.getMessage());
 		}
 		int totalPrice = 0;
-		for(Book book : books){
-			totalPrice = totalPrice + book.getPrice();
+		for(Book book: books) {
+			totalPrice += book.getPrice();
 		}
-		
 		return totalPrice;
 	}
 	

@@ -9,7 +9,7 @@ public class BookService {
 	}
 	
 	public void addBook(Book book) {
-		if(book.getPrice()>500) return;
+		if(book.getPrice()>400) return;
 		
 		bookRepo.save(book);
 	}

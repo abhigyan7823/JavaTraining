@@ -3,7 +3,8 @@ package com.junit.testdoubles.spy;
 public class BookRepoSpy implements BookRepo {
 	
 	int savecalled = 0;
-	Book lastBook = null;			
+	Book lastBook = null;	
+	
 	@Override
 	public void save(Book book) {
 		savecalled++;

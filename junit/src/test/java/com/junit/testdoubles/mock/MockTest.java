@@ -14,7 +14,7 @@ public class MockTest {
 		Book b2 = new Book(1002,"Witcher",300);
 		bookService.addBook(b1);
 		bookService.addBook(b2);
-		bookRepoMock.verify(b1, 1);
+		bookRepoMock.verify(b2, 1);
 	}
 	
 	@Test

@@ -46,13 +46,16 @@ public class BookServiceTest {
 		bookService.addBook(book1);
 	}
 	
+	
 	@Test
 	public void testSaveBookWithBookRequest() {
 		BookRequest bookRequest = new BookRequest("Mockito In Action", 700);
-	    Book book1 = new Book(0, "Mockito In Action", 700);
-	    doNothing().when(bookRepo).save(book1); 
-	    bookService.addBook(bookRequest);
+		Book book1 = new Book(0, bookRequest.getTitle(), bookRequest.getPrice());
+		doNothing().when(bookRepo).save(book1);
+		bookService.addBook(book1);
 	}
+	
+
 	
 	@Test
 	public void testSaveBookWithBookRequestWithGreaterPrice() {

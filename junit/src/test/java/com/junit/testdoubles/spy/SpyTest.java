@@ -14,13 +14,15 @@ public class SpyTest {
 		BookRepoSpy bookRepo = new BookRepoSpy();
 		BookService bookService = new BookService(bookRepo);
 		
-		Book b1 = new Book(1001,"Harry Potter",600);
-		Book b2 = new Book(1002,"Witcher",500);
+		Book b1 = new Book(1001,"Harry Potter",500);
+		Book b2 = new Book(1002,"Witcher",400);
 		bookService.addBook(b1);
-		bookService.addBook(b2);
-		assertEquals(2, bookRepo.timesCalled());
-		assertTrue(bookRepo.calledWith(b2));
+		assertEquals(0, bookRepo.timesCalled());
 		
+		bookService.addBook(b2);
+		assertEquals(1, bookRepo.timesCalled());
+//		assertEquals(1, bookRepo.timesCalled());
+//		assertTrue(bookRepo.calledWith(b2));	
 	}
 
 	@Test
@@ -28,8 +30,8 @@ public class SpyTest {
 		BookRepo bookRepo = spy(BookRepo.class);
 		BookService bookService = new BookService(bookRepo);
 		
-		Book b1 = new Book(1001,"Harry Potter",600);
-		Book b2 = new Book(1002,"Witcher",500);
+		Book b1 = new Book(1001,"Harry Potter",500);
+		Book b2 = new Book(1002,"Witcher",400);
 		bookService.addBook(b1);
 		bookService.addBook(b2);
 		

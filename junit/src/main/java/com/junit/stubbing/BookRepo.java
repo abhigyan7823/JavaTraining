@@ -5,7 +5,7 @@ import java.util.List;
 public interface BookRepo {
 	List<Book> findNewBooks(int days);
 
-	Book findBookByBookId(Integer id);
+	Book findBookByBookId(int id);
 
 	void save(Book book);
 	

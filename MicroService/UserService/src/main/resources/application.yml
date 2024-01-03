@@ -63,5 +63,5 @@ resilience4j:
       userRateLimiter:
         limit-refresh-period: 3s
         limit-for-period: 2
-        timeout-duration: 0
+        timeout-duration: 1s
         

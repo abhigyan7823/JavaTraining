@@ -1,7 +1,11 @@
 package com.gateway.controller;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
@@ -26,7 +30,25 @@ public class AuthController {
 			@AuthenticationPrincipal OidcUser user,
 			Model model
 		){
+			
+		logger.info("user email id: {}",user.getEmail());
+		AuthResponse authResponse = new AuthResponse();
 		
+		authResponse.setUserId(user.getEmail());
+		
+		authResponse.setAccessToken(client.getAccessToken().getTokenValue());
+		
+		authResponse.setRefreshToken(client.getRefreshToken().getTokenValue());
+		
+		authResponse.setExpireAt(client.getAccessToken().getExpiresAt().getEpochSecond());
+		
+		List<String> authorities = user.getAuthorities().stream().map(grantedAuthority -> {
+			return grantedAuthority.getAuthority();
+		}).collect(Collectors.toList());
+			
+		authResponse.setAuthories(authorities);
+		
+		return new ResponseEntity<>(authResponse, HttpStatus.OK);
 		
 	}
 	

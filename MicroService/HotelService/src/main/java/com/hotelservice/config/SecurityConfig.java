@@ -15,7 +15,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity security) throws Exception {
 		security
-			.authorizeRequests()
+			.authorizeHttpRequests()
 			.anyRequest()
 			.authenticated()
 			.and()

@@ -30,10 +30,11 @@ spring:
         registration:
           my-internal-client: 
             provider: okta
-            authorization-grant-type: client-credentials
-            scope: internal
-            client-id: 0oae91wqcliGNPvrH5d7
-            client-secret: SVwqDeIRHEHZ-s1JgytJaqkBKAj5TQlc64zClS3H_S-blIfKUOqRQ92BhfFI6McG
+            authorization-grant-type: client_credentials
+            scope:
+            - internal
+            client-id: 0oaeb9frr5RqzC62S5d7
+            client-secret: RJlGuGeDIcyJnEFe8xUyH4kmS6o2ZIGcO-hvO9aZ8i8wisYG8PPuoColYPSCE1SG
         provider:
           okta:
             issuer-uri: https://dev-73452732.okta.com/oauth2/default
@@ -48,19 +49,26 @@ spring:
 #  instance:
 #    prefer-ip-address: true
 
+
 management:
   health:
     circuitbreakers:
       enabled: true
-  
+  endpoints:
+    web:
+      exposure:
+        include: health
+
   endpoint:
     health:
       show-details: always
-      
+
+
+#Resilience4j
 resilience4j:
   circuitbreaker:
-    instances:
-      ratingHotelBreaker:
+    instances: 
+      ratingHotelCirciteBreakers:
         register-health-indicator: true
         event-consumer-buffer-size: 10
         failure-rate-threshold: 50
@@ -70,23 +78,23 @@ resilience4j:
         permitted-number-of-calls-in-half-open-state: 3
         sliding-window-size: 10
         sliding-window-type: count-based
-        
   retry:
     instances:
-      ratingHotelService:
+      ratingHotelRetry:
         max-attempts: 3
-        wait-duration: 3s
-        
+        wait-duration: 5s
+  
   ratelimiter:
     instances:
       userRateLimiter:
-        limit-refresh-period: 3s
+        limit-refresh-period: 4s 
         limit-for-period: 2
-        timeout-duration: 1s
+        timeout-duration: 2s
+       
         
 okta:
   oauth2:
     issuer: https://dev-73452732.okta.com/oauth2/default
-    audience: api://default 
+    audience: api://default
 
         

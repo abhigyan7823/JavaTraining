@@ -1,22 +1,20 @@
-package com.userservice.playload;
+package com.rating.payload;
 
 import org.springframework.http.HttpStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Data
-@Builder
-@Getter
 @Setter
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
-public class ApiResponse {
+@NoArgsConstructor
+@Builder
+public class ErrorMessageDTO {
 	private String message;
-	private boolean success;
+	private boolean isSuccess;
 	private HttpStatus status;
 }

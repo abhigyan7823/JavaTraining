@@ -1,8 +1,9 @@
 package com.rating.service.impl;
 
 import java.util.List;
-import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,29 +14,35 @@ import com.rating.service.RatingService;
 @Service
 public class RatingServiceImpl implements RatingService {
 
-	@Autowired
-	private RatingRepository ratingRepository;
+	Logger logger = LoggerFactory.getLogger(RatingServiceImpl.class);
 	
-	@Override
-	public Rating create(Rating rating) {
-		String Uuid = UUID.randomUUID().toString();
-		rating.setRatingId(Uuid);
-		return ratingRepository.save(rating);
-	}
+    @Autowired
+    private RatingRepository repository;
 
-	@Override
-	public List<Rating> getRatings() {
-		return ratingRepository.findAll();
-	}
+    @Override
+    public Rating create(Rating rating) {
+        return repository.save(rating);
+    }
 
-	@Override
-	public List<Rating> getRatingByUserId(String userId) {
-		return ratingRepository.findByUserId(userId);
-	}
+    @Override
+    public List<Rating> getRatings() {
+    	List<Rating> tempRating = repository.findAll();
+    	logger.info("Rating serviceImpl is called +++++++++++++++++++++++++++++++++++++++++"+tempRating.toString());
+    	
+        return tempRating;
+    }
 
-	@Override
-	public List<Rating> getRatingByHotelId(String hotelId) {
-		return ratingRepository.findByHotelId(hotelId);
-	}
+    @Override
+    public List<Rating> getRatingByUserId(String userId) {
+    	List<Rating> tempRating = repository.findByUserId(userId);
+    	logger.info("Rating serviceImpl is called +++++++++++++++++++++++++++++++++++++++++");
+        return repository.findByUserId(userId);
+    }
 
+    @Override
+    public List<Rating> getRatingByHotelId(String hotelId) {
+    	List<Rating> tempRating = repository.findByHotelId(hotelId);
+    	logger.info("Rating serviceImpl is called +++++++++++++++++++++++++++++++++++++++++");
+    	return repository.findByHotelId(hotelId);
+    }
 }

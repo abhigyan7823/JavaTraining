@@ -1,22 +1,24 @@
 package com.rating.entities;
 
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @AllArgsConstructor
-@Document("UserRatings")
+@NoArgsConstructor
+@Document("user_ratings")
 public class Rating {
-	
-	@Id
-	private String ratingId;
-	private String userId;
-	private String hotelId;
-	private int rating;
-	private String feedback;
+    @Id
+    private String ratingId;
+    private String userId;
+    private String hotelId;
+    private  int rating;
+    private  String feedback;
 }

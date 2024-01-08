@@ -8,10 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.rating.entities.Rating;
 
 @Repository
-public interface RatingRepository extends MongoRepository<Rating, String> {
-	
-	List<Rating> findByUserId(String userId);
-	
-	List<Rating> findByHotelId(String hotelId);
-	
+public interface RatingRepository extends MongoRepository <Rating,String>
+{
+    List<Rating> findByUserId(String userId);
+    List<Rating> findByHotelId(String hotelId);
+
 }

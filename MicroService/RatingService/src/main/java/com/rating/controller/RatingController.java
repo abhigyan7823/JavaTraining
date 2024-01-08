@@ -1,7 +1,10 @@
 package com.rating.controller;
 
+
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,29 +23,37 @@ import com.rating.service.RatingService;
 @RequestMapping("/ratings")
 public class RatingController {
 
-	@Autowired
-	private RatingService ratingService;
-
-	@PreAuthorize("hasAuthority('Admin')")
-	@PostMapping
-	public ResponseEntity<Rating> create(@RequestBody Rating rating) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(ratingService.create(rating));
-	}
-
-	@GetMapping
-	public ResponseEntity<List<Rating>> getRatings() {
-		return ResponseEntity.ok(ratingService.getRatings());
-	}
+    Logger logger = LoggerFactory.getLogger(RatingController.class);
 	
-	@PreAuthorize("hasAuthority('SCOPE_internal') || hasAuthority('Admin')")
-	@GetMapping("/users/{userId}")
-	public ResponseEntity<List<Rating>> getRatingsByUserId(@PathVariable String userId) {
-		return ResponseEntity.ok(ratingService.getRatingByUserId(userId));
-	}
+	@Autowired
+    private RatingService ratingService;
+    
+    @PostMapping
+    public ResponseEntity<Rating> create(@RequestBody Rating rating) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(ratingService.create(rating));
+    }
 
-	@GetMapping("/hotels/{hotelId}")
-	public ResponseEntity<List<Rating>> getRatingsByHotelId(@PathVariable String hotelId) {
-		return ResponseEntity.ok(ratingService.getRatingByHotelId(hotelId));
-	}
+    @GetMapping
+    public ResponseEntity<List<Rating>> getRatings() {
+    	List<Rating> tempRating = ratingService.getRatings();
+    	logger.info("Inside all get Ratings Methods of RatingController***********************************");
+        return ResponseEntity.ok(tempRating);
+    }
+
+    @GetMapping("/users/{userId}")
+  @PreAuthorize("hasAuthority('SCOPE_internal') || hasAuthority('Admin')")
+    public ResponseEntity<List<Rating>> getRatingsByUserId(@PathVariable String userId) {
+    	List<Rating> tempRating = ratingService.getRatingByUserId(userId);
+    	logger.info("Inside get Ratings By User ID Method of RatingController******************************");
+        return ResponseEntity.ok(tempRating);
+    }
+
+    @GetMapping("/hotels/{hotelId}")
+    public ResponseEntity<List<Rating>> getRatingsByHotelId(@PathVariable String hotelId) {
+    	List<Rating> tempRating = ratingService.getRatingByHotelId(hotelId);
+    	logger.info("Inside get Ratings By Hotel ID Method of RatingController******************************");
+        return ResponseEntity.ok(tempRating);
+    }
+
 
 }

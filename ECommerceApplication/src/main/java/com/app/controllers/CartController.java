@@ -17,7 +17,9 @@ import com.app.payloads.CartDTO;
 import com.app.services.CartService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 @RequestMapping("/api")
 @SecurityRequirement(name = "E-Commerce Application")
@@ -28,6 +30,7 @@ public class CartController {
 
 	@PostMapping("/public/carts/{cartId}/products/{productId}/quantity/{quantity}")
 	public ResponseEntity<CartDTO> addProductToCart(@PathVariable Long cartId, @PathVariable Long productId, @PathVariable Integer quantity) {
+		log.info("Cart Controllers Add To Cart method is called ");
 		CartDTO cartDTO = cartService.addProductToCart(cartId, productId, quantity);		
 		return new ResponseEntity<CartDTO>(cartDTO, HttpStatus.CREATED);
 	}

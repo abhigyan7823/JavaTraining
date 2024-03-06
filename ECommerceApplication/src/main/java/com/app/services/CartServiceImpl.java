@@ -19,7 +19,9 @@ import com.app.repositories.CartRepo;
 import com.app.repositories.ProductRepo;
 
 import jakarta.transaction.Transactional;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @Transactional
 @Service
 public class CartServiceImpl implements CartService {
@@ -39,6 +41,7 @@ public class CartServiceImpl implements CartService {
 	@Override
 	public CartDTO addProductToCart(Long cartId, Long productId, Integer quantity) {
 
+		log.info("CartServiceImpl's addProductToCartMethod is called ");
 		Cart cart = cartRepo.findById(cartId)
 				.orElseThrow(() -> new ResourceNotFoundException("Cart", "cartId", cartId));
 

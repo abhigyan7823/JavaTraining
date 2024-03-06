@@ -17,7 +17,9 @@ import com.app.payloads.UserDTO;
 import com.app.services.UserService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.log4j.Log4j2;
 
+@Log4j2
 @RestController
 @RequestMapping("/api")
 @SecurityRequirement(name = "E-Commerce Application")
@@ -28,8 +30,9 @@ public class UserController {
 	
 	@GetMapping("/admin/users")
 	public ResponseEntity<List<UserDTO>> getUsers() {
+		log.info("get Users Method of UserController +++++++++++++++++++++");
 		List<UserDTO> userDTO = userService.getAllUsers();
-		return new ResponseEntity<List<UserDTO>>(userDTO, HttpStatus.FOUND);
+		return new ResponseEntity<List<UserDTO>>(userDTO, HttpStatus.FOUND);	
 	}
 	
 	@GetMapping("/public/users/{userId}")

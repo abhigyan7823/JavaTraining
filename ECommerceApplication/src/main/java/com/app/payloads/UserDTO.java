@@ -6,11 +6,12 @@ import java.util.Set;
 import com.app.entites.Role;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
-@NoArgsConstructor
+@Getter
+@Setter@NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
 	

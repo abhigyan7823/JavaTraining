@@ -56,40 +56,31 @@ public class UserServiceImpl implements UserService {
 
 		try {
 			User user = modelMapper.map(userDTO, User.class);
-
 			Cart cart = new Cart();
 			user.setCart(cart);
-
 			Role role = roleRepo.findById(AppConstants.USER_ID).get();
 			user.getRoles().add(role);
-
 			String country = userDTO.getAddress().getCountry();
 			String state = userDTO.getAddress().getState();
 			String city = userDTO.getAddress().getCity();
 			String pincode = userDTO.getAddress().getPincode();
 			String street = userDTO.getAddress().getStreet();
 			String buildingName = userDTO.getAddress().getBuildingName();
-
 			Address address = addressRepo.findByCountryAndStateAndCityAndPincodeAndStreetAndBuildingName(country, state,
 					city, pincode, street, buildingName);
-
+			
 			if (address == null) {
 				address = new Address(country, state, city, pincode, street, buildingName);
-
 				address = addressRepo.save(address);
 			}
-
+			
 			user.setAddresses(List.of(address));
-
 			User registeredUser = userRepo.save(user);
-
 			cart.setUser(registeredUser);
-
 			userDTO = modelMapper.map(registeredUser, UserDTO.class);
-
 			userDTO.setAddress(modelMapper.map(user.getAddresses().stream().findFirst().get(), AddressDTO.class));
-
 			return userDTO;
+			
 		} catch (DataIntegrityViolationException e) {
 			throw new APIException("User already exists with emailId: " + userDTO.getEmail());
 		}
@@ -99,58 +90,46 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserDTO> getAllUsers() {
 		log.info("Retrieving all users");
-
 		List<User> users = userRepo.findAll();
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++==");
-		users.stream().forEach(System.out::println); 
-		if (users.isEmpty()) {
-			log.error("No users found");
-			throw new APIException("No User exists !!!");
-		}
-
-		List<UserDTO> userDTOs = users.stream().map(user -> {
-			UserDTO dto = modelMapper.map(user, UserDTO.class);
-
-			if (!user.getAddresses().isEmpty()) {
-				dto.setAddress(modelMapper.map(user.getAddresses().stream().findFirst().get(), AddressDTO.class));
-			}
-
-			CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
-
-			List<ProductDTO> products = user.getCart().getCartItems().stream()
-					.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
-
-			dto.setCart(cart);
-			dto.getCart().setProducts(products);
-
-			return dto;
-		}).collect(Collectors.toList());
-
-
-		log.info("Retrieved {} users", userDTOs.size());
-
+		log.info("+++++++++++++++++++++"+users);
+//		users.stream().forEach(System.out::println); 
+//		if (users.isEmpty()) {
+//			log.error("No users found");
+//			throw new APIException("No User exists !!!");
+//		}
+//		List<UserDTO> userDTOs = users.stream().map(user -> {
+//			UserDTO dto = modelMapper.map(user, UserDTO.class);
+//			if (!user.getAddresses().isEmpty()) {
+//				dto.setAddress(modelMapper.map(user.getAddresses().stream().findFirst().get(), AddressDTO.class));
+//			}
+//			CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
+//
+//			List<ProductDTO> products = user.getCart().getCartItems().stream()
+//					.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
+//			
+//			dto.setCart(cart);
+//			dto.getCart().setProducts(products);
+//			return dto;
+//		}).collect(Collectors.toList());
+//		log.info("Retrieved {} users", userDTOs.size());
+		List<UserDTO> userDTOs = users.stream().map(u -> modelMapper.map(u, UserDTO.class)).collect(Collectors.toList());		
 		return userDTOs;
 	}
 
 
 	@Override
 	public UserDTO getUserById(Long userId) {
+		
 		User user = userRepo.findById(userId)
-				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));
-
+				.orElseThrow(() -> new ResourceNotFoundException("User", "userId", userId));	
 		UserDTO userDTO = modelMapper.map(user, UserDTO.class);
-
 		userDTO.setAddress(modelMapper.map(user.getAddresses().stream().findFirst().get(), AddressDTO.class));
-
 		CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
-
 		List<ProductDTO> products = user.getCart().getCartItems().stream()
 				.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
 
 		userDTO.setCart(cart);
-
 		userDTO.getCart().setProducts(products);
-
 		return userDTO;
 	}
 
@@ -180,26 +159,19 @@ public class UserServiceImpl implements UserService {
 
 			if (address == null) {
 				address = new Address(country, state, city, pincode, street, buildingName);
-
 				address = addressRepo.save(address);
-
 				user.setAddresses(List.of(address));
 			}
 		}
 
 		userDTO = modelMapper.map(user, UserDTO.class);
-
 		userDTO.setAddress(modelMapper.map(user.getAddresses().stream().findFirst().get(), AddressDTO.class));
-
 		CartDTO cart = modelMapper.map(user.getCart(), CartDTO.class);
-
 		List<ProductDTO> products = user.getCart().getCartItems().stream()
 				.map(item -> modelMapper.map(item.getProduct(), ProductDTO.class)).collect(Collectors.toList());
 
 		userDTO.setCart(cart);
-
 		userDTO.getCart().setProducts(products);
-
 		return userDTO;
 	}
 
@@ -210,16 +182,12 @@ public class UserServiceImpl implements UserService {
 
 		List<CartItem> cartItems = user.getCart().getCartItems();
 		Long cartId = user.getCart().getCartId();
-
 		cartItems.forEach(item -> {
-
 			Long productId = item.getProduct().getProductId();
-
 			cartService.deleteProductFromCart(cartId, productId);
 		});
 
 		userRepo.delete(user);
-
 		return "User with userId " + userId + " deleted successfully!!!";
 	}
 
